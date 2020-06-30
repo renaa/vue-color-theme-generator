@@ -1,19 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" @dragover="allowDrop">
+    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <Dropzone msg="Welcome to Your Vue.js App" />
+    <form >
+          </form>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Dropzone from "./components/Dropzone.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Dropzone
+  },
+  methods: {
+    allowDrop: function(event) {
+      event.preventDefault();
+    },
   }
-}
+};
 </script>
 
 <style lang="scss">
