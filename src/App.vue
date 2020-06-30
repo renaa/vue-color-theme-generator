@@ -1,24 +1,45 @@
 <template>
   <div id="app" @dragover="allowDrop">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <Dropzone msg="Welcome to Your Vue.js App" />
-    <form >
-          </form>
+    <Dropzone msg="Welcome to Your Vue.js App" @paletteEmit="onChildEmit" />
+    <div>{{x}}</div>
+    <div>{{y}}</div>
+
+    <form></form>
   </div>
 </template>
 
 <script>
-import Dropzone from "./components/Dropzone.vue";
+import Dropzone from "@/components/Dropzone.vue";
 
 export default {
   name: "App",
   components: {
     Dropzone
   },
+  data: function() {
+    return {
+      palette: [],
+      y: 0
+    };
+  },
+  computed: {
+    x: function() {
+      return this.palette[0];
+    }
+  },
   methods: {
     allowDrop: function(event) {
       event.preventDefault();
     },
+    onChildEmit(value) {
+      this.palette = value;
+    }
+  },
+  watch: {
+    palette: function(newValue) {
+      this.y = newValue[0];
+    }
   }
 };
 </script>
