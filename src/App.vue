@@ -1,6 +1,7 @@
 <template>
-  <div id="app" @dragover="allowDrop">
+  <div id="app" @dragover.prevent @drop.prevent>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <div>sdsf</div>
     <Dropzone msg="Welcome to Your Vue.js App" @paletteEmit="onChildEmit" />
     <div>{{x}}</div>
     <div>{{y}}</div>
@@ -29,9 +30,6 @@ export default {
     }
   },
   methods: {
-    allowDrop: function(event) {
-      event.preventDefault();
-    },
     onChildEmit(value) {
       this.palette = value;
     }
@@ -45,6 +43,12 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  margin: auto;
+}
+* + * {
+  margin-top: 1em;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

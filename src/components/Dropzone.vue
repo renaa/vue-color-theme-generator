@@ -2,7 +2,7 @@
   <div
     class="dropzone"
     @drop="drop"
-    @dragover="allowDrop"
+    @dragover.prevent    
     @dragenter="dragEnter"
     @dragleave="dragLeave"
   >
@@ -35,9 +35,6 @@ export default {
     };
   },
   methods: {
-    allowDrop: function(event) {
-      event.preventDefault();
-    },
     dragEnter: function() {
       this.message = '"feed me" - 🦁';
     },
@@ -84,15 +81,14 @@ $size: 400px;
   font-family: Menlo, Consolas, "Courier New", monospace;
 }
 div {
-  margin: auto;
   display: flex;
   flex-direction: column;
   width: $size;
   height: $size;
   background-color: aquamarine;
-  * {
-    margin: auto;
-  }
+}
+p {
+  margin: auto;
 }
 img {
   width: 100%;
