@@ -2,7 +2,6 @@
   <div
     class="dropzone"
     @drop="drop"
-    @dragover.prevent    
     @dragenter="dragEnter"
     @dragleave="dragLeave"
   >
@@ -31,7 +30,7 @@ export default {
       imageLoaded: false,
       message: "drop image here",
       src: "",
-      palette: null
+      palette: null,
     };
   },
   methods: {
@@ -58,13 +57,9 @@ export default {
         self.src = e.target.result;
         self.image = self.$refs.imgRef;
         self.image.onload = function() {
-          // let canvas = document.createElement("canvas");
-          // let ctx = canvas.getContext("2d");
-          // ctx.drawImage(img, 0, 0);
-          // let imageData = ctx.getImageData(0, 0, img.width, img.height).data;
-          let colorThief = new ColorThief();
-          self.palette = colorThief.getPalette(self.image, 50, 9);
-          self.$emit("paletteEmit", self.palette);
+          const colorThief = new ColorThief();
+          const palette = colorThief.getPalette(self.image, 50, 9);
+          self.$emit("dropzoneEmit", palette);
         };
       };
       reader.readAsDataURL(file);
@@ -83,7 +78,7 @@ $size: 400px;
 div {
   display: flex;
   flex-direction: column;
-  width: $size;
+  width: 100%;
   height: $size;
   background-color: aquamarine;
 }
@@ -91,7 +86,7 @@ p {
   margin: auto;
 }
 img {
-  width: 100%;
+  width: 50%;
 }
 canvas {
   display: none;

@@ -1,10 +1,10 @@
 <template>
   <div id="app" @dragover.prevent @drop.prevent>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <div>sdsf</div>
-    <Dropzone msg="Welcome to Your Vue.js App" @paletteEmit="onChildEmit" />
-    <div>{{x}}</div>
-    <div>{{y}}</div>
+    <h2>Color Theme Generator</h2>
+    <Dropzone msg="Welcome to Your Vue.js App" @dropzoneEmit="onDropzoneEmit" />
+    <Palette @paletteEmit="onPaletteEmit"  :palette="palette"/>
+    <div class='p'>{{palette}}</div>
 
     <form></form>
   </div>
@@ -12,31 +12,35 @@
 
 <script>
 import Dropzone from "@/components/Dropzone.vue";
+import Palette from "@/components/Palette.vue";
 
 export default {
   name: "App",
   components: {
-    Dropzone
+    Dropzone,
+    Palette
   },
   data: function() {
     return {
-      palette: [],
-      y: 0
+      palette: []
     };
   },
   computed: {
-    x: function() {
-      return this.palette[0];
-    }
   },
   methods: {
-    onChildEmit(value) {
-      this.palette = value;
-    }
+    onDropzoneEmit(value) {
+      this.palette = value.map(e => this.intArrayToHex(e));
+    },
+    onPaletteEmit(el) {
+      this.$set(this.palette, el.id, el.value)
+    },
+    intArrayToHex(array) {
+  return "#" + array[0].toString(16) + array[1].toString(16) + array[2].toString(16);
+}  
   },
   watch: {
     palette: function(newValue) {
-      this.y = newValue[0];
+      console.log(this.palette, newValue)
     }
   }
 };
@@ -56,5 +60,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.p{
+  font-family: "Lucida Console", Monaco, monospace; 
+}
+h2{
+  text-shadow: 2px 2px aquamarine;
+  
 }
 </style>
