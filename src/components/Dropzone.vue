@@ -34,6 +34,7 @@ export default {
     };
   },
   methods: {
+
     dragEnter: function() {
       this.message = '"feed me" - 🦁';
     },
